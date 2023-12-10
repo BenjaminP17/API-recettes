@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\RecipeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\RecipeRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
 class Recipe
@@ -15,12 +16,14 @@ class Recipe
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['get_collection'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 2083, nullable: true)]
     private ?string $picture = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['get_collection'])]
     private ?string $description = null;
 
     #[ORM\Column(length: 10)]
@@ -124,3 +127,4 @@ class Recipe
         return $this;
     }
 }
+    

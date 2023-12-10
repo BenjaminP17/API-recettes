@@ -16,9 +16,9 @@ class RecipeController extends AbstractController
     #[Route('/api/recipes', name: 'app_recipe', methods: ['GET'])]
     public function getAllRecipe(RecipeRepository $RecipeRepository, SerializerInterface $serializer): JsonResponse
     {
-        $recipesList = $RecipeRepository->findall();
+        $recipesList = $RecipeRepository->findAll();
 
-        $jsonRecipesList = $serializer->serialize($recipesList, 'json');
+        $jsonRecipesList = $serializer->serialize($recipesList, 'json', ['groups'=>'get_collection']);
 
         return new JsonResponse([$jsonRecipesList, Response::HTTP_OK, [], true]);
     }
