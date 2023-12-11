@@ -20,6 +20,7 @@ class Recipe
     private ?string $name = null;
 
     #[ORM\Column(length: 2083, nullable: true)]
+    #[Groups(['get_collection'])]
     private ?string $picture = null;
 
     #[ORM\Column(type: Types::TEXT)]

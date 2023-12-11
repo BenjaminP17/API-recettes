@@ -9,17 +9,30 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-// Route qui renvoi la liste de toutes les recettes (titre et description)
 
 class RecipeController extends AbstractController
 {
-    #[Route('/api/recipes', name: 'app_recipe', methods: ['GET'])]
+    // Route qui renvoi la liste de toute les recettes (titre et description)
+    #[Route('/api/recipes', name: 'app_all_recipes', methods: ['GET'])]
     public function getAllRecipe(RecipeRepository $RecipeRepository, SerializerInterface $serializer): JsonResponse
     {
         $recipesList = $RecipeRepository->findAll();
-
+        
         $jsonRecipesList = $serializer->serialize($recipesList, 'json', ['groups'=>'get_collection']);
+        
+        return new JsonResponse($jsonRecipesList, Response::HTTP_OK, [], true);
+    }
 
-        return new JsonResponse([$jsonRecipesList, Response::HTTP_OK, [], true]);
+    // Route qui renvoi une recette
+    #[Route('/api/recipe/{id}', name: 'app_one_recipe', methods: ['GET'])]
+    public function getOneRecipe($id, RecipeRepository $RecipeRepository, SerializerInterface $serializer): JsonResponse
+    {
+        $recipe = $RecipeRepository->find($id);
+        
+        $JsonRecipe = $serializer->serialize($recipe,'json');
+
+        return new JsonResponse($JsonRecipe, Response::HTTP_OK, [], true);
     }
 }
+
+
