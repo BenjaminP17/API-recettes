@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\RecipeRepository;
@@ -38,6 +40,15 @@ class Recipe
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updated_at = null;
+
+    #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'recipes')]
+    #[Groups(['get_collection'])]
+    private Collection $ingredient;
+
+    public function __construct()
+    {
+        $this->ingredient = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -124,6 +135,30 @@ class Recipe
     public function setUpdatedAt(\DateTimeInterface $updated_at): static
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ingredient>
+     */
+    public function getIngredient(): Collection
+    {
+        return $this->ingredient;
+    }
+
+    public function addIngredient(Ingredient $ingredient): static
+    {
+        if (!$this->ingredient->contains($ingredient)) {
+            $this->ingredient->add($ingredient);
+        }
+
+        return $this;
+    }
+
+    public function removeIngredient(Ingredient $ingredient): static
+    {
+        $this->ingredient->removeElement($ingredient);
 
         return $this;
     }

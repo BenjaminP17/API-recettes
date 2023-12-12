@@ -29,7 +29,7 @@ class RecipeController extends AbstractController
     {
         $recipe = $RecipeRepository->find($id);
         
-        $JsonRecipe = $serializer->serialize($recipe,'json');
+        $JsonRecipe = $serializer->serialize($recipe,'json', ['groups'=>'get_collection']);
 
         return new JsonResponse($JsonRecipe, Response::HTTP_OK, [], true);
     }
