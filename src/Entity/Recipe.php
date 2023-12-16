@@ -51,10 +51,15 @@ class Recipe
     #[Groups(['details'])] 
     private Collection $steps;
 
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'recipes')]
+    #[Groups(['details'])]
+    private Collection $category;
+
     public function __construct()
     {
         $this->ingredient = new ArrayCollection();
         $this->steps = new ArrayCollection();
+        $this->category = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -190,6 +195,30 @@ class Recipe
     public function removeStep(Step $step): static
     {
         $this->steps->removeElement($step);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategory(): Collection
+    {
+        return $this->category;
+    }
+
+    public function addCategory(Category $category): static
+    {
+        if (!$this->category->contains($category)) {
+            $this->category->add($category);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): static
+    {
+        $this->category->removeElement($category);
 
         return $this;
     }
