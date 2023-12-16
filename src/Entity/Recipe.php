@@ -18,21 +18,23 @@ class Recipe
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['get_collection'])]
+    #[Groups(['show_recipe','details'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 2083, nullable: true)]
-    #[Groups(['get_collection'])]
+    #[Groups(['show_recipe','details'])]
     private ?string $picture = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(['get_collection'])]
+    #[Groups(['show_recipe','details'])]
     private ?string $description = null;
 
     #[ORM\Column(length: 10)]
+    #[Groups(['details'])]
     private ?string $cook_time = null;
 
     #[ORM\Column]
+    #[Groups(['details'])]
     private ?int $servings = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -42,7 +44,7 @@ class Recipe
     private ?\DateTimeInterface $updated_at = null;
 
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'recipes')]
-    #[Groups(['get_collection'])]
+    #[Groups(['details'])]
     private Collection $ingredient;
 
     public function __construct()

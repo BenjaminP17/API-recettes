@@ -17,13 +17,14 @@ class Ingredient
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['get_collection'])]
+    #[Groups(['details'])]
     private ?string $name = null;
 
     #[ORM\ManyToMany(targetEntity: Recipe::class, mappedBy: 'ingredient')]
     private Collection $recipes;
 
     #[ORM\ManyToMany(targetEntity: Quantity::class, inversedBy: 'ingredients')]
+    #[Groups(['details'])]
     private Collection $quantity;
 
     public function __construct()

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\RecipeRepository;
+use App\Repository\QuantityRepository;
 use App\Repository\IngredientRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,18 +20,18 @@ class RecipeController extends AbstractController
     {
         $recipesList = $RecipeRepository->findAll();
         
-        $jsonRecipesList = $serializer->serialize($recipesList, 'json', ['groups'=>'get_collection']);
+        $jsonRecipesList = $serializer->serialize($recipesList, 'json', ['groups'=>'show_recipe']);
         
         return new JsonResponse($jsonRecipesList, Response::HTTP_OK, [], true);
     }
 
     // Route qui renvoi une recette
     #[Route('/api/recipe/{id}', name: 'app_one_recipe', methods: ['GET'])]
-    public function getOneRecipe($id, RecipeRepository $RecipeRepository, IngredientRepository $IngredientRepository, SerializerInterface $serializer): JsonResponse
+    public function getOneRecipe($id, RecipeRepository $RecipeRepository, IngredientRepository $IngredientRepository, QuantityRepository $QuantityRepository, SerializerInterface $serializer): JsonResponse
     {
         $recipe = $RecipeRepository->find($id);
 
-        $JsonRecipe = $serializer->serialize($recipe,'json', ['groups'=>'get_collection']);
+        $JsonRecipe = $serializer->serialize($recipe,'json', ['groups'=>'details']);
 
         return new JsonResponse($JsonRecipe, Response::HTTP_OK, [], true);
     }
