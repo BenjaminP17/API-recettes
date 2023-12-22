@@ -14,18 +14,18 @@ class Quantity
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    public ?int $id = null;
 
     #[ORM\Column]
     #[Groups(['details'])]  
-    private ?float $number = null;
+    public ?float $number = null;
 
     #[ORM\ManyToMany(targetEntity: Ingredient::class, mappedBy: 'quantity')]
-    private Collection $ingredients;
+    public Collection $ingredients;
 
     #[ORM\Column(length: 10, nullable: true)]
     #[Groups(['details'])]  
-    private ?string $unit = null;
+    public ?string $unit = null;
 
     public function __construct()
     {

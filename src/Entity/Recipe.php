@@ -15,45 +15,45 @@ class Recipe
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    public ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['show_recipe','details'])]
-    private ?string $name = null;
+    public ?string $name = null;
 
     #[ORM\Column(length: 2083, nullable: true)]
     #[Groups(['show_recipe','details'])]
-    private ?string $picture = null;
+    public ?string $picture = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Groups(['show_recipe','details'])]
-    private ?string $description = null;
+    public ?string $description = null;
 
     #[ORM\Column(length: 10)]
     #[Groups(['details'])]
-    private ?string $cook_time = null;
+    public ?string $cook_time = null;
 
     #[ORM\Column]
     #[Groups(['details'])]
-    private ?int $servings = null;
+    public ?int $servings = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $created_at = null;
+    public ?\DateTimeInterface $created_at = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $updated_at = null;
+    public ?\DateTimeInterface $updated_at = null;
 
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'recipes')]
     #[Groups(['details'])]
-    private Collection $ingredient;
+    public Collection $ingredient;
 
     #[ORM\ManyToMany(targetEntity: Step::class, inversedBy: 'recipes')]
     #[Groups(['details'])] 
-    private Collection $steps;
+    public Collection $steps;
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'recipes')]
     #[Groups(['details'])]
-    private Collection $category;
+    public Collection $category;
 
     public function __construct()
     {
