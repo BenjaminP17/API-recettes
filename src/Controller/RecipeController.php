@@ -38,7 +38,7 @@ class RecipeController extends AbstractController
         return new JsonResponse($JsonRecipe, Response::HTTP_OK, [], true);
     }
 
-    // TODO Route pour créer une nouvelle recette.
+    // Route pour créer une nouvelle recette.
     #[Route('/api/create', name: 'create_recipe', methods: ['POST'])]
     public function createRecipe(Request $Request, EntityManagerInterface $em, SerializerInterface $serializer): JsonResponse
     {
