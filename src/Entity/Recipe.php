@@ -17,7 +17,7 @@ class Recipe
     #[ORM\Column]
     public ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     #[Groups(['show_recipe','details'])]
     public ?string $name = null;
 
@@ -43,15 +43,16 @@ class Recipe
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     public ?\DateTimeInterface $updated_at = null;
 
-    #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'recipes')]
+    #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'recipes', cascade:['persist'])]
     #[Groups(['details'])]
     public Collection $ingredient;
 
-    #[ORM\ManyToMany(targetEntity: Step::class, inversedBy: 'recipes')]
+    #[ORM\ManyToMany(targetEntity: Step::class, inversedBy: 'recipes', cascade:['persist'])]
     #[Groups(['details'])] 
     public Collection $steps;
 
-    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'recipes')]
+    // cascade persist permet d'ajouter de la données à une entité reliée à Recipe
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'recipes', cascade:['persist'])]
     #[Groups(['details'])]
     public Collection $category;
 

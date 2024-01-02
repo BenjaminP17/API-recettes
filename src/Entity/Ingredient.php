@@ -16,14 +16,14 @@ class Ingredient
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     #[Groups(['details'])]
     private ?string $name = null;
 
     #[ORM\ManyToMany(targetEntity: Recipe::class, mappedBy: 'ingredient')]
     private Collection $recipes;
 
-    #[ORM\ManyToMany(targetEntity: Quantity::class, inversedBy: 'ingredients')]
+    #[ORM\ManyToMany(targetEntity: Quantity::class, inversedBy: 'ingredients', cascade:['persist'])]
     #[Groups(['details'])]
     private Collection $quantity;
 

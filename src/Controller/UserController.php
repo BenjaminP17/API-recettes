@@ -13,6 +13,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
+    //Creation d'un utilisateur
     #[Route('/api/user/register', name: 'app_user', methods:['POST'])]
     public function register(Request $request,
     UserPasswordHasherInterface $passwordHasher,

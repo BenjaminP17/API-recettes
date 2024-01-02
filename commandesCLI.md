@@ -8,3 +8,7 @@ Migration : php bin/console make:migration
 
 
 Vider le cache : php bin/console cache:clear
+
+Démarrer le serveur Symfo : symfony server:start
+
+Vérifier l'état de notre BDD par rapport à notre code : php bin/console doctrine:schema:validate

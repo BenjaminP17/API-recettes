@@ -21,7 +21,7 @@ class Step
     #[Groups(['details'])] 
     private ?string $instruction = null;
 
-    #[ORM\Column(type: Types::SMALLINT)]
+    #[ORM\Column(type: Types::SMALLINT, unique: true)]
     #[Groups(['details'])] 
     private ?int $priority = null;
 

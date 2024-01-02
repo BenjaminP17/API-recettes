@@ -4,8 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Recipe;
 use App\Repository\RecipeRepository;
-use App\Repository\QuantityRepository;
-use App\Repository\IngredientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +27,7 @@ class RecipeController extends AbstractController
 
     // Route qui renvoi une recette
     #[Route('/api/recipe/{id}', name: 'one_recipe', methods: ['GET'])]
-    public function getOneRecipe($id, RecipeRepository $RecipeRepository, IngredientRepository $IngredientRepository, QuantityRepository $QuantityRepository, SerializerInterface $serializer): JsonResponse
+    public function getOneRecipe($id, RecipeRepository $RecipeRepository, SerializerInterface $serializer): JsonResponse
     {
         $recipe = $RecipeRepository->find($id);
 
@@ -42,9 +40,9 @@ class RecipeController extends AbstractController
     #[Route('/api/create', name: 'create_recipe', methods: ['POST'])]
     public function createRecipe(Request $Request, EntityManagerInterface $em, SerializerInterface $serializer): JsonResponse
     {
-        
+        //!! Creation de recette a améliorer (creation recette et categorie OK)
         $recipe = $serializer->deserialize($Request->getContent(), Recipe::class, 'json');
-
+        
         $em->persist($recipe);
         $em->flush();
 
