@@ -56,11 +56,15 @@ class Recipe
     #[Groups(['details'])]
     public Collection $category;
 
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'recipe')]
+    private Collection $users;
+
     public function __construct()
     {
         $this->ingredient = new ArrayCollection();
         $this->steps = new ArrayCollection();
         $this->category = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -220,6 +224,33 @@ class Recipe
     public function removeCategory(Category $category): static
     {
         $this->category->removeElement($category);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeRecipe($this);
+        }
 
         return $this;
     }

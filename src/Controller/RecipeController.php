@@ -40,7 +40,7 @@ class RecipeController extends AbstractController
     #[Route('/api/create', name: 'create_recipe', methods: ['POST'])]
     public function createRecipe(Request $Request, EntityManagerInterface $em, SerializerInterface $serializer): JsonResponse
     {
-        //!! Creation de recette a améliorer (creation recette et categorie OK)
+        //!! TODO Gérer données "unique" sur category et ingredient
         $recipe = $serializer->deserialize($Request->getContent(), Recipe::class, 'json');
         
         $em->persist($recipe);
